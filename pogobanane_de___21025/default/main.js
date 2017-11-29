@@ -9,7 +9,7 @@ module.exports.loop = function () {
     for (var name in Game.spawns)
         if (Game.spawns[name].room.find(FIND_HOSTILE_CREEPS)!='') {
         let room= Game.spawns[name].room
-            // console.log('There are enemys in Room "' + room.name + '\"')
+            console.log('There are enemys in Room "' + room.name + '\"')
         }
 
 
