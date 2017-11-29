@@ -26,7 +26,7 @@ var roleBuilder = {
                             return structure.hits <= structure.hitsMax - 200;
                         }
                     });
-                console.log(repairables.length)
+            //    console.log(repairables.length)
                 if (repairables.length) {
                     let target = creep.pos.findClosestByPath(repairables)
                     if (creep.repair(target) === ERR_NOT_IN_RANGE) {
