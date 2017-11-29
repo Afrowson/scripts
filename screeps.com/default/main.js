@@ -1,4 +1,4 @@
-var manager = require('creeps.management')
+var manager = require('creeps.management');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
