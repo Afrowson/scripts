@@ -8,12 +8,12 @@ creeps: {
   miner800: {partCounts:[5,4,2,0,0,0,0,0], name:'Miner'},
 },
 
-    spawnSpecific: function (name,memory) {
+    spawnSpecific: function (spawner,name,memory) {
       let creep= this.creeps[name]
       this.spawn(creep.partCounts,creep.name,memory)
     },
 
-    spawn: function (partCounts, name, memory) {
+    spawn: function (spawner,partCounts, name, memory) {
 
         let parts = [WORK, MOVE, CARRY, ATTACK, RANGED_ATTACK, HEAL, TOUGH, CLAIM];
         let bodyParts = [];
@@ -33,8 +33,7 @@ creeps: {
            i++
         }
 
-
-        Game.spawns['Main'].createCreep(bodyParts, name, memory)
+        Game.spawns[spawner].createCreep(bodyParts, name, memory)
         return name
     }
 
