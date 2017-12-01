@@ -1,90 +1,83 @@
-spawner= require('main.spawner')
+let spawner = require('main.spawner')
 
-let mainControl={
+let mainControl = {
 
-  start: function(){
-console.log('test')
-    Memory.stats={
-      harvesters:0,
-      upgraders:0,
-      builders:0,
-      repairers:0,
-    }
-    Memory.swarmGoals= {
-          harvesters:3,
-          upgrader:0,
-          builder:0,
-          repairer:0
+    start: function () {
+
+        Memory.stats = {
+            harvesters: 0,
+            upgraders: 0,
+            builders: 0,
+            repairers: 0,
+        }
+        Memory.swarmGoals = {
+            harvesters: 3,
+            upgrader: 0,
+            builder: 0,
+            repairer: 0
         }
 
-    this.harvesterSpawn()
+        this.harvesterSpawn()
 
-    Memory.swarmLevel=1
-  },
+        Memory.swarmLevel = 1
+    },
 
-  one: function() {
-console.log('test')
-    this.harvesterSpawn()
+    one: function () {
+        this.harvesterSpawn()
 
-    if(Memory.stats.harvesters===3)
-    {
-      Memory.swarmLevel=2
-      Memory.swarmGoals.upgrader=3
-    }
-
-  },
-
-  two: function() {
-
-    this.harvesterSpawn()
-
-    if((Memory.stats.harvesters >= Memory.swarmGoals.harvesters && Memory.stats.upgraders >= Memory.swarmGoals.upgraders )
-    {
-      Memory.swarmLevel=3
-      Memory.swarmGoals.upgraders=5
-      Memory.swarmGoals.builders=5
-    }
-  },
-
-  three: function()  {
-    this.harvesterSpawn()
-
-    if((Memory.stats.harvesters + Memory.stats.upgraders + Memory.stats.builders + Memory.stats.repairers >= 15)
-    {
-      Console.log('jetzt ist das Skript am Ende...')
-
+        if (Memory.stats.harvesters === 3) {
+            Memory.swarmLevel = 2
+            Memory.swarmGoals.upgrader = 3
+        }
 
     },
 
-  harvesterSpawn: function(){
+    two: function () {
 
-    if(Game.spawn.Main.room.energyCapacity<550){
-      if(Game.spawns.Main.room.energyAvailable >299)
-      {
-        if(spawner.spawnSpecific('Main','basic',{role:'harvester'}))
-        {
-          Memory.stats.harvesters++
-        }
-      }
-    }else{
-      if(Game.spawns.Main.room.energyAvailable >449)
-      {
-        if(spawner.spawnSpecific('Main','worker550',{role:'harvester'}))
-        {
-          Memory.stats.harvesters++
-        }
-      }
+        this.harvesterSpawn()
 
+        if ((Memory.stats.harvesters >= Memory.swarmGoals.harvesters && Memory.stats.upgraders) >= Memory.swarmGoals.upgraders) {
+            Memory.swarmLevel = 3
+            Memory.swarmGoals.upgraders = 5
+            Memory.swarmGoals.builders = 5
+        }
+    },
+
+    three: function () {
+        this.harvesterSpawn()
+
+        if ((Memory.stats.harvesters + Memory.stats.upgraders + Memory.stats.builders + Memory.stats.repairers) >= 15) {
+            Console.log('jetzt ist das Skript am Ende...')
+
+        }
+    },
+
+    harvesterSpawn: function () {
+
+        if (Game.spawns.Main.room.energyCapacity < 550) {
+            if (Game.spawns.Main.room.energyAvailable > 299) {
+                if (spawner.spawnSpecific('Main', 'basic', {role: 'harvester'})) {
+                    Memory.stats.harvesters++
+                }
+            }
+        } else {
+            if (Game.spawns.Main.room.energyAvailable > 449) {
+                if (spawner.spawnSpecific('Main', 'worker550', {role: 'harvester'})) {
+                    Memory.stats.harvesters++
+                }
+            }
+
+        }
+    },
+
+    manageCreeps: function () {
+        hdiv = Memory.swarmGoals.harvesters - Memory.stats.harvesters.length
+        udiv = Memory.swarmGoals.upgraders - Memory.stats.upgraders.length
+        bdiv = Memory.swarmGoals.builders - Memory.stats.builders.length
+
+        //@todo  wenn positive ergebnisse, verschiebe creeps in rols mit negativen.
     }
-  },
-
-  manageCreeps: function(){
-    hdiv=  Memory.swarmGoals.harvesters - Memory.stats.harvesters.length
-    udiv=  Memory.swarmGoals.upgraders - Memory.stats.upgraders.length
-    bdiv=  Memory.swarmGoals.builders - Memory.stats.builders.length
-
-  //@todo  wenn positive ergebnisse, verschiebe creeps in rols mit negativen.
-  }
 
 }
-module.exports= mainControl
+
+module.exports = mainControl;
