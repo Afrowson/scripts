@@ -3,7 +3,7 @@ spawner= require('main.spawner')
 let mainControl={
 
   start: function(){
-
+console.log('test')
     Memory.stats={
       harvesters:0,
       upgraders:0,
@@ -23,7 +23,7 @@ let mainControl={
   },
 
   one: function() {
-
+console.log('test')
     this.harvesterSpawn()
 
     if(Memory.stats.harvesters===3)

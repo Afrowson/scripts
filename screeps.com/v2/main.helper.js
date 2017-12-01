@@ -13,7 +13,8 @@ let mainHelper={
       Memory.stats.harvesters = _.filter(Game.creeps, creep => creep.memory.role === 'harvester');
       Memory.stats.upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrader');
       Memory.stats.builders = _.filter(Game.creeps, creep => creep.memory.role === 'builder');
-      Memory.stats.repairers = _.filter(Game.creeps, creep => creep.memory.role === 'repairer');
+      Memory.stats.repairers = _.filter(Game.creeps, creep => creep.memory.role === 'repairer');  
+
   }
 
 module.exports= mainHelper
