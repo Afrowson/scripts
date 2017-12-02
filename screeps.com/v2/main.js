@@ -1,6 +1,6 @@
 let spawner = require('main.spawner');
 let helper = require('main.helper');
-let control = require('main.control')
+let control = require('main.control');
 
 module.exports.loop = function () {
 
@@ -8,6 +8,7 @@ module.exports.loop = function () {
     control.start()
   }
 
+  
   helper.cleanCreeps()
   helper.updateStats()
 
@@ -21,13 +22,8 @@ module.exports.loop = function () {
   if(Memory.swarmLevel=== 3){
     control.three()
   }
-
-
-
-
-
+  control.manageCreeps()
+  
   console.log('Current Tick: '+Game.time)
-
-
 
 }

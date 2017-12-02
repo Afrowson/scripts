@@ -1,4 +1,4 @@
-var mainCreep={
+var mainCreep = {
 
 
 //1. Check auf spezielle Befehle im Memory(move/repair/renew)
@@ -8,4 +8,4 @@ var mainCreep={
 
 }
 
-module.exports= mainCreep;
+module.exports = mainCreep;
