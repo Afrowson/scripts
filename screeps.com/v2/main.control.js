@@ -4,14 +4,19 @@ let mainControl = {
     
     start: function() {
         
+        Memory.jobs = {
+            feed: 3,
+            build: 0,
+            repair: 0
+        }
         Memory.stats = {
-            harvesters: 0,
+            feeders: 0,
             upgraders: 0,
             builders: 0,
             repairers: 0,
         }
         Memory.swarmGoals = {
-            harvesters: 3,
+            feeders: 3,
             upgrader: 0,
             builder: 0,
             repairer: 0
@@ -26,7 +31,7 @@ let mainControl = {
         
         spawner.spawnHarvester('Main')
         
-        if(Memory.stats.harvesters === 3) {
+        if(Memory.stats.feeders === 3) {
             Memory.swarmLevel = 2
             Memory.swarmGoals.upgrader = 3
         }
@@ -37,7 +42,7 @@ let mainControl = {
         
         spawner.spawnHarvester('Main')
         
-        if((Memory.stats.harvesters >= Memory.swarmGoals.harvesters &&
+        if((Memory.stats.feeders >= Memory.swarmGoals.feeders &&
             Memory.stats.upgraders >= Memory.swarmGoals.upgraders )) {
             Memory.swarmLevel = 3
             Memory.swarmGoals.upgraders = 5
@@ -48,7 +53,7 @@ let mainControl = {
     three: function() {
         spawner.spawnHarvester('Main')
         
-        if((Memory.stats.harvesters + Memory.stats.upgraders +
+        if((Memory.stats.feeders + Memory.stats.upgraders +
             Memory.stats.builders + Memory.stats.repairers >= 15)) {
             Console.log('jetzt ist das Skript am Ende...')
         }
@@ -57,23 +62,43 @@ let mainControl = {
     
     manageCreeps: function() {
         
-        for(name in Game.creeps) {
-            if(Game.creeps[name].memory.role = waiting) {
+        if(Game.spawns['Main'].room.energyAvailable < 300) {
+            console.log(Memory.jobs)
+            Memory.jobs.feed = 3 - Memory.stats.feeders.length
+        }
+        
+        
+        let constructionSites = Game.spawns['Main'].room.find(FIND_MY_CONSTRUCTION_SITES).length;
+        if(constructionSites < 2)
+            Memory.jobs.build = 1
+        if(constructionSites >= 2)
+            Memory.jobs.build = 3
+        if(constructionSites >= 10)
+            Memory.jobs.build = 4
+        if(constructionSites >= 20)
+            Memory.jobs.build = 5
+        if(constructionSites >= 50)
+            Memory.jobs.build = 6
+        
+        
+        for(let name in Game.creeps
+            ) {
+            if(Game.creeps[name].memory.role = 'waiting') {
                 let creep = Game.creeps[name]
-                if(Memory.jobs.harvester) {
-                    creep.memory.role = 'harvester'
-                    Memory.jobs.harvester--
-                } else if(Memory.jobs.builder) {
-                    creep.memory.role = 'builder'
-                    Memory.jobs.role--
-                } else if(Memory.jobs.repairer) {
-                    creep.memory.role = 'repairer'
-                    Memory.jobs.harvester--
+                if(Memory.jobs.feed) {
+                    creep.memory.role = 'feed'
+                    Memory.jobs.feed--
+                } else if(Memory.jobs.build) {
+                    creep.memory.role = 'build'
+                    Memory.jobs.build--
+                } else if(Memory.jobs.repair) {
+                    creep.memory.role = 'repair'
+                    Memory.jobs.repair--
                     
                 } else {
-                    creep.memory.role = 'upgrader'
+                    creep.memory.role = 'upgrade'
                     //@todo erweitern um Verteilung auf Alle Räume die controlliert sind.
-                    creep.memory.room = Game.spawner[Main].room
+                    creep.memory.room = Game.spawner['Main'].room
                 }
             }
         }

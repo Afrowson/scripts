@@ -11,10 +11,10 @@ let mainHelper = {
     updateStats: function() {
         
         
-        Memory.stats.harvesters = _.filter(Game.creeps, creep => creep.memory.role === 'harvester');
-        Memory.stats.upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrader');
-        Memory.stats.builders = _.filter(Game.creeps, creep => creep.memory.role === 'builder');
-        Memory.stats.repairers = _.filter(Game.creeps, creep => creep.memory.role === 'repairer');
+        Memory.stats.feeders = _.filter(Game.creeps, creep => creep.memory.role === 'feed');
+        Memory.stats.upgraders = _.filter(Game.creeps, creep => creep.memory.role === 'upgrade');
+        Memory.stats.builders = _.filter(Game.creeps, creep => creep.memory.role === 'build');
+        Memory.stats.repairers = _.filter(Game.creeps, creep => creep.memory.role === 'repair');
     }
 }
 

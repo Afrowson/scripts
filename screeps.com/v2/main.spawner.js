@@ -39,14 +39,14 @@ var mainSpawner = {
         
         if(Game.spawns[spawn].room.energyCapacityAvailable < 550) {
             if(Game.spawns[spawn].room.energyAvailable > 299) {
-                if(this.spawnSpecific('Main', 'basic', {role: 'harvester'})) {
-                    Memory.stats.harvesters++
+                if(this.spawnSpecific('Main', 'basic', {role: 'feed'})) {
+                    Memory.stats.feeders++
                 }
             }
         } else {
             if(Game.spawns[spawn].room.energyAvailable > 449) {
-                if(this.spawnSpecific('Main', 'worker550', {role: 'harvester'})) {
-                    Memory.stats.harvesters++
+                if(this.spawnSpecific('Main', 'worker550', {role: 'feed'})) {
+                    Memory.stats.feeders++
                 }
             }
         }
