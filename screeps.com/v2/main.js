@@ -4,7 +4,7 @@ let control = require('main.control');
 
 module.exports.loop = function() {
     
-    if(Memory.swarmLevel == undefined) {
+    if(Memory.swarmLevel === undefined) {
         control.start()
     }
     helper.cleanCreeps()
@@ -23,7 +23,6 @@ module.exports.loop = function() {
     control.manageCreeps()
     
     console.log('Current Tick: ' + Game.time)
-    
     for(let name in Game.creeps) {
         console.log(Game.creeps[name])
         Game.creeps[name].run()
