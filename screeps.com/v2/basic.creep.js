@@ -28,8 +28,8 @@ Creep.prototype.recharge = function () {
     }
 }
 
-Creep.prototype.feed = function () {
-  let bool = this.memory.bool
+Creep.prototype.feeding = function () {
+    let bool = this.memory.bool
     let target = Game.getObjectById(this.memory.roleTarget)
     if (!target || target.energy === target.energyCapacity) {
         target = this.findEnergyStorage()
@@ -38,29 +38,27 @@ Creep.prototype.feed = function () {
     if (target) {
         if (this.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
-            this.say('🍽 feeding');
-
+            this.say('🍽 feed');
         } else {
             this.memory.working = false
         }
     } else {
-      if(bool=== true){
-        this.memory.role = 'upgrade'
-        this.memory.working = false
-        bool= false
-        this.run()
-      } else {
-        this.memory.bool=true
+        if (bool === true) {
+            this.memory.role = 'upgradeing'
+            this.memory.working = false
+            bool = false
+            this.run()
+        } else {
+            this.memory.bool = true
         }
     }
 }
 
-Creep.prototype.upgrade = function () {
+Creep.prototype.upgradeing = function () {
 
     if (this.upgradeController(this.room.controller) === ERR_NOT_IN_RANGE) {
         this.moveTo(this.room.controller, {visualizePathStyle: {stroke: '#fff666'}});
         this.say('⚡ upgrade');
-
     }
     if (this.carry.energy <= this.workParts()) {
         this.memory.working = false
@@ -68,9 +66,9 @@ Creep.prototype.upgrade = function () {
     }
 }
 
-Creep.prototype.build = function () {
+Creep.prototype.building = function () {
     let target = Game.getObjectById(this.memory.roleTarget)
-    if (target == null || target.progress <= target.progressTotal) {
+    if (target === null || target.progress <= target.progressTotal) {
         target = this.findConstructionSite()
     }
     if (this.carry.energy <= this.workParts()) {
@@ -80,52 +78,53 @@ Creep.prototype.build = function () {
         if (this.build(target) === ERR_NOT_IN_RANGE) {
             this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
             this.say('🚧 build');
+        } else {
         }
     } else {
-        this.memory.role = 'upgrade'
+        this.memory.role = 'upgradeing'
         this.memory.working = false
         this.run()
     }
 
 }
-Creep.prototype.repair = function () {
+Creep.prototype.repairing = function () {
     let target = Game.getObjectById(this.memory.roleTarget)
     if (target === undefined || target.hits <= target.hitsMax - 200) {
         target = this.findRepairables()
     }
-    if (this.carry.energy <= this.workParts()) {
+    if (this.carry.energy === 0) {
         this.memory.working = false
     }
     if (target) {
         if (this.repair(target) === ERR_NOT_IN_RANGE) {
             this.moveTo(target, {visualizePathStyle: {stroke: '#efefef'}});
-            this.say('🛠️ repair');
+            this.say('🛠 repair');
 
         }
     } else {
-        this.memory.role = 'upgrade'
+        this.memory.role = 'upgradeing'
         this.memory.working = false
         this.run()
     }
 },
 
-Creep.prototype.findEnergyStorage = function () {
-    let targets = this.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-            return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN || structure.structureType === STRUCTURE_CONTAINER) &&
-                structure.energy < structure.energyCapacity;
+    Creep.prototype.findEnergyStorage = function () {
+        let targets = this.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN || structure.structureType === STRUCTURE_CONTAINER) &&
+                    structure.energy < structure.energyCapacity;
+            }
+        });
+        if (targets.length > 0) {
+            let target = this.pos.findClosestByPath(targets)
+            this.memory.roleTarget = target.id
+            return target
         }
-    });
-    if (targets.length > 0) {
-        let target = this.pos.findClosestByPath(targets)
-        this.memory.roleTarget = target.id
-        return target
+        return undefined
     }
-    return undefined
-}
 
 Creep.prototype.findConstructionSite = function () {
-    let target = this.pos.findClosestByPath(this.room.find(FIND_MY_CONSTRUCTION_SITES))
+    let target = this.pos.findClosestByPath(this.room.find(FIND_CONSTRUCTION_SITES))
     if (target) {
         this.memory.roleTarget = target.id
     }
