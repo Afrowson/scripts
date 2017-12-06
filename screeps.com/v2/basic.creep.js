@@ -1,7 +1,5 @@
 Creep.prototype.run = function () {
 
-
-    console.log('WORKING: ' + this.memory.working)
     if (this.carry.energy < this.carryCapacity && !this.memory.working) {
         this.recharge()
     } else {
@@ -23,6 +21,7 @@ Creep.prototype.workParts = function () {
 Creep.prototype.recharge = function () {
     //@todo auch Speicher nutzen, wenn besser geeignet oder so.
     let source = this.pos.findClosestByPath(FIND_SOURCES);
+
     if (this.harvest(source) === ERR_NOT_IN_RANGE) {
         this.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
         this.say('🔄 recharge');
@@ -30,7 +29,7 @@ Creep.prototype.recharge = function () {
 }
 
 Creep.prototype.feed = function () {
-
+  let bool = this.memory.bool
     let target = Game.getObjectById(this.memory.roleTarget)
     if (!target || target.energy === target.energyCapacity) {
         target = this.findEnergyStorage()
@@ -45,24 +44,27 @@ Creep.prototype.feed = function () {
             this.memory.working = false
         }
     } else {
-        console.log('ICH WUSTE ES!!!!            ' + target)
+      if(bool=== true){
         this.memory.role = 'upgrade'
         this.memory.working = false
+        bool= false
         this.run()
+      } else {
+        this.memory.bool=true
+        }
     }
 }
 
 Creep.prototype.upgrade = function () {
-    console.log('ICH WUSTE ES!!!!            '+ this.memory.role        )
+
     if (this.upgradeController(this.room.controller) === ERR_NOT_IN_RANGE) {
         this.moveTo(this.room.controller, {visualizePathStyle: {stroke: '#fff666'}});
         this.say('⚡ upgrade');
 
     }
-    console.log(this.carry.energy)
-    console.log(this.workParts())
     if (this.carry.energy <= this.workParts()) {
         this.memory.working = false
+        this.memory.role = 'waiting'
     }
 }
 
@@ -82,7 +84,6 @@ Creep.prototype.build = function () {
     } else {
         this.memory.role = 'upgrade'
         this.memory.working = false
-        console.log(' hier')
         this.run()
     }
 
@@ -104,10 +105,9 @@ Creep.prototype.repair = function () {
     } else {
         this.memory.role = 'upgrade'
         this.memory.working = false
-        console.log('hier')
         this.run()
     }
-}
+},
 
 Creep.prototype.findEnergyStorage = function () {
     let targets = this.room.find(FIND_STRUCTURES, {

@@ -15,48 +15,21 @@ let mainControl = {
             builders: 0,
             repairers: 0,
         }
-        Memory.swarmGoals = {
-            feeders: 3,
-            upgrader: 0,
-            builder: 0,
-            repairer: 0
-        }
+
 
         Memory.swarmLevel = 1
     },
 
     one: function () {
 
-        spawner.spawnHarvester('Main')
-
-        if (Memory.stats.feeders === 3) {
-            Memory.swarmLevel = 2
-            Memory.swarmGoals.upgrader = 3
-        }
-
-    },
-
-    two: function () {
-
-        spawner.spawnHarvester('Main')
-
-        if ((Memory.stats.feeders >= Memory.swarmGoals.feeders &&
-                Memory.stats.upgraders >= Memory.swarmGoals.upgraders )) {
-            Memory.swarmLevel = 3
-            Memory.swarmGoals.upgraders = 5
-            Memory.swarmGoals.builders = 5
-        }
-    },
-
-    three: function () {
-        spawner.spawnHarvester('Main')
-
         if ((Memory.stats.feeders + Memory.stats.upgraders +
                 Memory.stats.builders + Memory.stats.repairers >= 15)) {
-            Console.log('jetzt ist das Skript am Ende...')
+            console.log('jetzt ist das Skript am Ende...')
+        }else{
+          spawner.spawnHarvester('Main')
         }
-    },
 
+    },
 
     manageCreeps: function () {
 
@@ -68,29 +41,29 @@ let mainControl = {
         let constructionSites = Game.spawns['Main'].room.find(FIND_MY_CONSTRUCTION_SITES).length;
         if (constructionSites === 0)
             Memory.jobs.build = 0
-        if (constructionSites < 2)
-            Memory.jobs.build = 1
-        if (constructionSites >= 2)
+        if (constructionSites > 1)
             Memory.jobs.build = 3
-        if (constructionSites >= 10)
-            Memory.jobs.build = 4
-        if (constructionSites >= 20)
+        if (constructionSites > 10)
             Memory.jobs.build = 5
-        if (constructionSites >= 50)
+        if (constructionSites >= 20)
             Memory.jobs.build = 6
+        if (constructionSites >= 50)
+            Memory.jobs.build = 7
+        if (constructionSites >= 100)
+            Memory.jobs.build = 8
 
 
         for (let name in Game.creeps
             ) {
-            if (Game.creeps[name].memory.role = 'waiting') {
+            if (Game.creeps[name].memory.role == 'waiting') {
                 let creep = Game.creeps[name]
-                if (Memory.jobs.feed) {
+                if (Memory.jobs.feed > 0) {
                     creep.memory.role = 'feed'
                     Memory.jobs.feed--
-                } else if (Memory.jobs.build) {
+                } else if (Memory.jobs.build > 0) {
                     creep.memory.role = 'build'
                     Memory.jobs.build--
-                } else if (Memory.jobs.repair) {
+                } else if (Memory.jobs.repair > 0) {
                     creep.memory.role = 'repair'
                     Memory.jobs.repair--
 
