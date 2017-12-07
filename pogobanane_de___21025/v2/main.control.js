@@ -22,7 +22,7 @@ let mainControl = {
     one: function () {
 
         if ((Memory.stats.feeders + Memory.stats.upgraders +
-                Memory.stats.buildingers + Memory.stats.repairers >= 15)) {
+                Memory.stats.constructers + Memory.stats.repairers >= 15)) {
             console.log('jetzt ist das Skript am Ende...')
         } else {
             spawner.spawnHarvester('Main')
