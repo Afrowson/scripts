@@ -5,7 +5,7 @@ let mainControl = {
     start: function () {
 
         Memory.jobs = {
-            feed: 0,
+            feed: 3,
             building: 0,
             repair: 0
         }
