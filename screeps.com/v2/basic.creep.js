@@ -92,7 +92,6 @@ Creep.prototype.building = function () {
 
 Creep.prototype.repairing = function () {
     let target = Game.getObjectById(this.memory.roleTarget)
-    console.log(target)
     if (!target || target.hits === target.hitsMax) {
         target = this.findRepairables()
     }

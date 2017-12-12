@@ -12,17 +12,25 @@ let mainHelper = {
 
     updateStats: function () {
 
-            for (let name in Game.creeps) {
-                creep = Game.creeps[name]
 
-                if (creep.memory.role === 'feeding')
-                    Memory.rooms[creep.memory.room].stats.feeders += creep.workParts()
-                if (creep.memory.role === 'upgradeing')
-                    Memory.rooms[creep.memory.room].stats.upgraders += creep.workParts()
-                if (creep.memory.role === 'building')
-                    Memory.rooms[creep.memory.room].stats.feeders += creep.workParts()
-                if (creep.memory.role === 'repairing')
-                    Memory.rooms[creep.memory.room].stats.feeders += creep.workParts()
+        for (let id in Memory.rooms) {
+            Memory.rooms[id].stats.feeders = 0
+            Memory.rooms[id].stats.upgraders = 0
+            Memory.rooms[id].stats.builders = 0
+            Memory.rooms[id].stats.repairers = 0
+        }
+
+
+        for (let name in Game.creeps) {
+            creep = Game.creeps[name]
+            if (creep.memory.role === 'feeding')
+                Memory.rooms[creep.memory.room].stats.feeders += creep.workParts()
+            if (creep.memory.role === 'upgradeing')
+                Memory.rooms[creep.memory.room].stats.upgraders += creep.workParts()
+            if (creep.memory.role === 'building')
+                Memory.rooms[creep.memory.room].stats.builders += creep.workParts()
+            if (creep.memory.role === 'repairing')
+                Memory.rooms[creep.memory.room].stats.repairers += creep.workParts()
         }
     }
 }

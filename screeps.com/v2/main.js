@@ -4,7 +4,7 @@ let control = require('main.control');
 
 module.exports.loop = function () {
 
-    if (Memory.swarmLevel === undefined) {
+    if (!Memory.init) {
         control.start()
     }
 
@@ -17,18 +17,12 @@ module.exports.loop = function () {
         if (room.memory.level === 1) {
             control.one(room)
         }
-        console.log('A')
         control.manageCreeps(room)
-        console.log('B')
-
     }
-
 
     console.log('Current Tick: ' + Game.time)
     for (let name in Game.creeps) {
         console.log(Game.creeps[name] + ' does ' + Game.creeps[name].memory.role)
         Game.creeps[name].run()
     }
-
-    console.log('Final',Memory.buildCounter)
 }

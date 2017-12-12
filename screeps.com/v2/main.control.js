@@ -3,13 +3,13 @@ let spawner = require('main.spawner')
 let mainControl = {
 
     start: function () {
-
-        Memory.repairCounter = 0
-        Memory.buildCounter = 0
+        Memory.init = 1
         Memory.rooms = {
             [Game.spawns['Main'].room.name]: {
                 name: Game.spawns['Main'].room.name,
                 spawns: ['Main'],
+                repairCounter: 0,
+                buildCounter: 0,
                 level: 1,
                 stats: {
                     feeders: 0,
@@ -40,22 +40,14 @@ let mainControl = {
         if (room.energyAvailable < room.energyCapacityAvailable) {
             room.memory.jobs.feeding = 5 - room.memory.stats.feeders
         }
-        console.log('X',Memory.buildCounter)
-        Memory.buildCounter = Memory.buildCounter+1
-        console.log('X',Memory.buildCounter)
-        Memory.buildCounter+=1
-        console.log('X',Memory.buildCounter)
-        Memory.buildCounter+=1
-        console.log('X',Memory.buildCounter)
-
-        if (Memory.buildCounter === 5) {
-            console.log('C')
-            Memory.buildCounter = 0
+        room.memory.buildCounter++
+        if (room.memory.buildCounter === 5) {
+            room.memory.buildCounter = 0
             this.updateJobBuilders(room)
         }
-        Memory.repairCounter++
-        if (Memory.repairCounter === 50) {
-            Memory.repairCounter = 0
+        room.memory.repairCounter++
+        if (room.memory.repairCounter === 50) {
+            room.memory.repairCounter = 0
             this.updateJobRepairers(room)
         }
 
@@ -101,11 +93,9 @@ let mainControl = {
     updateJobBuilders: function (room) {
         let constructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
         let neededWork = 0
-        console.log(neededWork)
         for (let i = 0; i < Object.keys(constructionSites).length; i++) {
             neededWork += constructionSites[i].progressTotal - constructionSites[i].progress
         }
-        console.log(neededWork)
         if (neededWork === 0)
             room.memory.jobs.building = 0
         if (neededWork > 1)
