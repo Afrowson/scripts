@@ -46,7 +46,7 @@ let mainControl = {
             this.updateJobBuilders(room)
         }
         room.memory.repairCounter++
-        if (room.memory.repairCounter === 50) {
+        if (room.memory.repairCounter >= 20) {
             room.memory.repairCounter = 0
             this.updateJobRepairers(room)
         }
@@ -73,19 +73,18 @@ let mainControl = {
         let repairables = room.find(FIND_STRUCTURES,
             {
                 filter: (s) => {
-                    return s.structureType !== STRUCTURE_WALL && s.hits <= s.hitsMax - 200;
+                    return s.structureType !== STRUCTURE_WALL && s.hits < s.hitsMax;
                 }
-            }).length;
+            });
 
         let requiredStructurePoints = 0
         for (let i = 0; i < repairables.length; i++) {
             requiredStructurePoints += repairables[i].hitsMax - repairables[i].hits;
         }
 
-        console.log('Repairables: ' + repairables + ' with ' + requiredStructurePoints + ' missing StructurePaints')
-        if (repairables > 10)
+        if (repairables.length >= 10 || requiredStructurePoints >= 3000)
             room.memory.jobs.repairing++
-        if (repairables < 3 && room.memory.jobs.repairing >= 2)
+        if (repairables < 3 && requiredStructurePoints < 800 && room.memory.jobs.repairing >= 2)
             room.memory.jobs.repairing--
 
     },
