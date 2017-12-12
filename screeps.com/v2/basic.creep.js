@@ -11,7 +11,7 @@ Creep.prototype.run = function () {
 Creep.prototype.workParts = function () {
     let counter = 0
     for (let part in this.body) {
-        if (this.body[part].type == WORK) {
+        if (this.body[part].type === WORK) {
             counter++
         }
     }

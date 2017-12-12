@@ -39,13 +39,13 @@ Room.prototype.manageCreeps = function () {
             } else {
                 creep.memory.role = 'upgradeing'
                 //@todo erweitern um Verteilung auf Alle Räume die controlliert sind.
-                creep.memory.room = room.name
+                creep.memory.room = this.name
             }
         }
     }
 }
 Room.prototype.updateJobRepairers = function () {
-    let repairables = room.find(FIND_STRUCTURES,
+    let repairables = this.find(FIND_STRUCTURES,
         {
             filter: (s) => {
                 return s.structureType !== STRUCTURE_WALL && s.hits < s.hitsMax;
@@ -65,7 +65,7 @@ Room.prototype.updateJobRepairers = function () {
 }
 
 Room.prototype.updateJobBuilders = function () {
-    let constructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
+    let constructionSites = this.find(FIND_MY_CONSTRUCTION_SITES);
     let neededWork = 0
     for (let i = 0; i < Object.keys(constructionSites).length; i++) {
         neededWork += constructionSites[i].progressTotal - constructionSites[i].progress

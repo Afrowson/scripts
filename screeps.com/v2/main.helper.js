@@ -53,6 +53,15 @@ let mainHelper = {
                 }
             }
         }
+        Memory.blueprints = {
+            creeps: {
+                basic: {partCounts: [2, 1, 1, 0, 0, 0, 0, 0], name: 'Basic'},
+                worker550: {partCounts: [3, 3, 2, 0, 0, 0, 0, 0], name: 'Small Worker'},
+                worker800: {partCounts: [4, 3, 5, 0, 0, 0, 0, 0], name: 'Medium Worker'},
+                howler800: {partCounts: [0, 11, 5, 0, 0, 0, 0, 0], name: 'Howler'},
+                miner800: {partCounts: [5, 4, 2, 0, 0, 0, 0, 0], name: 'Miner'},
+            }
+        }
     },
 }
 
