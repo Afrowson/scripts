@@ -11,7 +11,7 @@ Creep.prototype.run = function () {
 Creep.prototype.workParts = function () {
     let counter = 0
     for (let part in this.body) {
-        if (part === WORK) {
+        if (this.body[part].type == WORK) {
             counter++
         }
     }
@@ -46,7 +46,7 @@ Creep.prototype.feeding = function () {
         if (bool === true) {
             this.memory.role = 'upgradeing'
             this.memory.working = false
-            bool = false
+            this.memory.bool = false
             this.run()
         } else {
             this.memory.bool = true
@@ -62,6 +62,7 @@ Creep.prototype.upgradeing = function () {
     }
     if (this.carry.energy <= this.workParts()) {
         this.memory.working = false
+        this.memory.roleTarget = undefined
         this.memory.role = 'waiting'
     }
 }
@@ -71,7 +72,7 @@ Creep.prototype.building = function () {
     if (target === null || target.progress <= target.progressTotal) {
         target = this.findConstructionSite()
     }
-    if (this.carry.energy <= this.workParts()) {
+    if (this.carry.energy <= this.workParts() * 10) {
         this.memory.working = false
     }
     if (target) {
@@ -82,11 +83,13 @@ Creep.prototype.building = function () {
         }
     } else {
         this.memory.role = 'upgradeing'
+        this.memory.roleTarget = undefined
         this.memory.working = false
         this.run()
     }
 
 }
+
 Creep.prototype.repairing = function () {
     let target = Game.getObjectById(this.memory.roleTarget)
     console.log(target)
@@ -104,25 +107,26 @@ Creep.prototype.repairing = function () {
         }
     } else {
         this.memory.role = 'upgradeing'
+        this.memory.roleTarget = undefined
         this.memory.working = false
         this.run()
     }
-},
+}
 
-    Creep.prototype.findEnergyStorage = function () {
-        let targets = this.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN || structure.structureType === STRUCTURE_CONTAINER) &&
-                    structure.energy < structure.energyCapacity;
-            }
-        });
-        if (targets.length > 0) {
-            let target = this.pos.findClosestByPath(targets)
-            this.memory.roleTarget = target.id
-            return target
+Creep.prototype.findEnergyStorage = function () {
+    let targets = this.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN || structure.structureType === STRUCTURE_CONTAINER) &&
+                structure.energy < structure.energyCapacity;
         }
-        return undefined
+    });
+    if (targets.length > 0) {
+        let target = this.pos.findClosestByPath(targets)
+        this.memory.roleTarget = target.id
+        return target
     }
+    return undefined
+}
 
 Creep.prototype.findConstructionSite = function () {
     let target = this.pos.findClosestByPath(this.room.find(FIND_CONSTRUCTION_SITES))

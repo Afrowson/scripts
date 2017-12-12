@@ -8,12 +8,14 @@ var mainSpawner = {
         miner800: {partCounts: [5, 4, 2, 0, 0, 0, 0, 0], name: 'Miner'},
     },
 
-    spawnSpecific: function(spawner, name, memory) {
+    spawnSpecific: function(room, name, memory) {
+        let spawn= room.memory.spawns[0]
         let creep = this.creeps[name]
-        this.spawn(spawner, creep.partCounts, creep.name, memory)
+        console.log('X',memory.role,memory.room)
+        this.spawn(spawn, creep.partCounts, creep.name, memory)
     },
 
-    spawn: function(spawner, partCounts, name, memory) {
+    spawn: function(spawn, partCounts, name, memory) {
 
         let parts = [WORK, MOVE, CARRY, ATTACK, RANGED_ATTACK, HEAL, TOUGH, CLAIM];
         let bodyParts = [];
@@ -32,20 +34,20 @@ var mainSpawner = {
             i++
         }
 
-        Game.spawns[spawner].createCreep(bodyParts, name, memory)
+        Game.spawns[spawn].createCreep(bodyParts, name, memory)
         return name
     },
-    spawnHarvester(spawn){
+    spawnHarvester(room){
+        if(room.energyCapacityAvailable < 550) {
 
-        if(Game.spawns[spawn].room.energyCapacityAvailable < 550) {
-            if(Game.spawns[spawn].room.energyAvailable > 299) {
-                if(this.spawnSpecific('Main', 'basic', {role: 'waiting'})) {
+            if(room.energyAvailable > 299) {
+                if(this.spawnSpecific(room, 'basic', {room: room.name, role: 'waiting'})) {
                     Memory.stats.feeders++
                 }
             }
         } else {
-            if(Game.spawns[spawn].room.energyAvailable > 449) {
-                if(this.spawnSpecific('Main', 'worker550', {role: 'waiting'})) {
+            if(room.energyAvailable > 449) {
+                if(this.spawnSpecific(room, 'worker550', {role: 'waiting',room: room.name})) {
                     Memory.stats.feeders++
                 }
             }
