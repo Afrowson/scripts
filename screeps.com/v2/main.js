@@ -1,11 +1,11 @@
 let helper = require('main.helper');
 let creep = require('basic.creep');
-let control = require('main.control');
+let room = require('basic.room');
 
 module.exports.loop = function () {
 
     if (!Memory.init) {
-        control.start()
+        helper.start()
     }
 
     helper.cleanCreeps()
@@ -15,9 +15,9 @@ module.exports.loop = function () {
     for (let name in Game.rooms) {
         let room = Game.rooms[name]
         if (room.memory.level === 1) {
-            control.one(room)
+            room.one()
         }
-        control.manageCreeps(room)
+        room.manageCreeps()
     }
 
     console.log('Current Tick: ' + Game.time)
