@@ -1,61 +1,20 @@
-# Das sind Scripts für Screeps.com 
+# This is my Tiny AI for Screeps.com 
+
+It can spawn Creeps with 300 and 550 Energy Automaticly and assign Basic Tasks to them. 
+The Maximal Amount of Creeps is 20.
 
 
-# Creeps
+## Basic Tasks:
+- Feeding - Harvest Energy to produce more Creeps
+- Upgradeing
+- Building
+- Repairing
 
-## Basic - 300
--2	WORK
--1	CARRY
--1	MOVE
+## Assignment System:
+- The needed Amount of Workers for different Tasks is calculated periodically. 
+- Workers switch Tasks automatically when they are done.
 
-## Worker - 550
+## next UP:
 
--2	WORK
--3	CARRY
--4	MOVE
-
-## Howler - 800
-
--11	CARRY
--5	MOVE
-
-## Miner - 800
-
--5	WORK
--4	CARRY
--2	MOVE
-
-## Worker - 800
-
--4 WORK
--3 CARRY
--5 MOVE
-
-
-# Tasks
-
-## Harvester
-
-- Sammelt Energie
-- füllt Spawner dann Extensions
-
-## Upgrader
-
-- Sammelt Energie 
-- upgraded Controller
-
-## Bauarbeiter
-
-- Sammelt Energie
-- Baut Gebäude (keine Walls|Ramparts)
-
-
-## Reparierer
-
-- Sammelt Energie 
-- Repariert Gebäude(keine Walls|Ramparts)
-
-## Defence Reparierer
-
-- Sammelt energie//Nimmt >Energie aus Speicher
-- füllt Walls dann Rampars dann Towers auf.
+- Towers, Defenders, Automatic Road building. 
+- look into Links and Storage for LDM and more efficient Worker CPU

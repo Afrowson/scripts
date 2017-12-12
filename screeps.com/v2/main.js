@@ -1,6 +1,8 @@
 let helper = require('main.helper');
 let creep = require('basic.creep');
 let room = require('basic.room');
+var Traveler = require('Traveler');
+
 
 module.exports.loop = function () {
 
