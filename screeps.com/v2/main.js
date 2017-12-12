@@ -16,8 +16,11 @@ module.exports.loop = function () {
         let room = Game.rooms[name]
         if (room.memory.level === 1) {
             control.one(room)
-            control.manageCreeps(room)
         }
+        console.log('A')
+        control.manageCreeps(room)
+        console.log('B')
+
     }
 
 
@@ -26,4 +29,6 @@ module.exports.loop = function () {
         console.log(Game.creeps[name] + ' does ' + Game.creeps[name].memory.role)
         Game.creeps[name].run()
     }
+
+    console.log('Final',Memory.buildCounter)
 }
