@@ -86,7 +86,7 @@ Creep.prototype.building = function () {
         target = this.findConstructionSite()
     }
 
-    if (this.carry.energy <= this.workParts() * 10) {
+    if (this.carry.energy <= this.workParts() * 5) {
         this.memory.working = false
     }
 

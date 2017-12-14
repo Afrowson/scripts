@@ -17,8 +17,8 @@ module.exports.loop = function () {
         let room = Game.rooms[name]
         if (room.memory.level === 1) {
             room.one()
+            room.manageCreeps()
         }
-        room.manageCreeps()
     }
 
     console.log('Current Tick: ' + Game.time)

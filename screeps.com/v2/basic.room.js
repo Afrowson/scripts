@@ -1,7 +1,6 @@
 let spawn = require('basic.spawn')
 
 Room.prototype.one = function () {
-    console.log(Object.keys(Game.creeps))
     if (Object.keys(Game.creeps).length >= 20) {
         console.log('jetzt ist das Skript am Ende...')
     } else {

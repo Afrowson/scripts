@@ -30,8 +30,7 @@ Spawn.prototype.spawn = function (partCounts, name, memory) {
     return name
 }
 
-Spawn.prototype.spawnUnspecific= function(room)
-{
+Spawn.prototype.spawnUnspecific= function(room){
     if (room.energyCapacityAvailable < 550) {
 
         if (room.energyAvailable > 299) {
@@ -47,4 +46,3 @@ Spawn.prototype.spawnUnspecific= function(room)
         }
     }
 }
-

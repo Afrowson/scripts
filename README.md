@@ -15,6 +15,9 @@ The Maximal Amount of Creeps is 20.
 - Workers switch Tasks automatically when they are done.
 
 ## next UP:
-
+- Fix Creeps move to a room => Game breaks becouse of stats
+- fix Room goes trough all not own creeps
+- Assigne Repairers to Structures from Pool 
+to increase efficencie per repairer 
 - Towers, Defenders, Automatic Road building. 
 - look into Links and Storage for LDM and more efficient Worker CPU
