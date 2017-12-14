@@ -17,6 +17,7 @@ let mainHelper = {
             Memory.rooms[id].stats.upgraders = 0
             Memory.rooms[id].stats.builders = 0
             Memory.rooms[id].stats.repairers = 0
+            Memory.rooms[id].aliveCreeps = Object.keys(Game.creeps)
         }
 
         for (let name in Game.creeps) {
@@ -30,6 +31,7 @@ let mainHelper = {
             if (creep.memory.role === 'repairing')
                 Memory.rooms[creep.memory.room].stats.repairers += creep.workParts()
         }
+        
     },
     start: function () {
         Memory.init = 1

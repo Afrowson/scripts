@@ -1,4 +1,4 @@
-let spawn= require('basic.spawn')
+let spawn = require('basic.spawn')
 
 Room.prototype.one = function () {
     if (this.memory.feeders + this.memory.upgraders +
@@ -21,7 +21,7 @@ Room.prototype.manageCreeps = function () {
         this.updateJobBuilders()
     }
     this.memory.repairCounter++
-    if (this.memory.repairCounter >= 20) {
+    if (this.memory.repairCounter >= 50) {
         this.memory.repairCounter = 0
         this.updateJobRepairers()
     }
@@ -34,10 +34,13 @@ Room.prototype.manageCreeps = function () {
                 this.memory.jobs.feeding--
             } else if (this.memory.jobs.building - this.memory.stats.builders > 0) {
                 creep.memory.role = 'building'
+                this.memory.stats.builders += creep.workParts()
             } else if (this.memory.jobs.repairing - this.memory.stats.repairers > 0) {
                 creep.memory.role = 'repairing'
+                this.memory.stats.repairers += creep.workParts()
             } else {
                 creep.memory.role = 'upgradeing'
+                this.memory.stats.upgraders += creep.workParts()
                 //@todo erweitern um Verteilung auf Alle Räume die controlliert sind.
                 creep.memory.room = this.name
             }
