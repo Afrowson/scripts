@@ -1,30 +1,29 @@
 let helper = require('main.helper');
 let creep = require('basic.creep');
-let control = require('main.control');
+let room = require('basic.room');
+var Traveler = require('Traveler');
 
-module.exports.loop = function() {
+module.exports.loop = function () {
 
-    if(Memory.swarmLevel === undefined) {
-        control.start()
+    if (!Memory.init) {
+        helper.start()
     }
+
     helper.cleanCreeps()
+
     helper.updateStats()
 
-    if(Memory.swarmLevel === 1) {
-        control.one()
+    for (let name in Game.rooms) {
+        let room = Game.rooms[name]
+        if (room.memory.level === 1) {
+            room.one()
+            room.manageCreeps()
+        }
     }
-
-    if(Memory.swarmLevel === 2) {
-        control.two()
-    }
-    if(Memory.swarmLevel === 3) {
-        control.three()
-    }
-    control.manageCreeps()
 
     console.log('Current Tick: ' + Game.time)
-    for(let name in Game.creeps) {
-        console.log(Game.creeps[name] +' does '+ Game.creeps[name].memory.role )
+    for (let name in Game.creeps) {
+        console.log(Game.creeps[name] + ' does ' + Game.creeps[name].memory.role)
         Game.creeps[name].run()
     }
 }

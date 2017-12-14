@@ -23,7 +23,7 @@ Creep.prototype.recharge = function () {
     let source = this.pos.findClosestByPath(FIND_SOURCES);
 
     if (this.harvest(source) === ERR_NOT_IN_RANGE) {
-        this.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
+        this.travelTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
     }
     if (this.memory.role === 'upgradeing')
         this.say('🔄⚡');
@@ -37,6 +37,7 @@ Creep.prototype.recharge = function () {
     if (this.memory.role === 'building')
         this.say('🔄🚧');
 }
+
 Creep.prototype.feeding = function () {
     let bool = this.memory.bool
     let target = Game.getObjectById(this.memory.roleTarget)
@@ -46,7 +47,7 @@ Creep.prototype.feeding = function () {
 
     if (target) {
         if (this.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+            this.travelTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
         } else {
             this.memory.working = false
         }
@@ -68,7 +69,7 @@ Creep.prototype.feeding = function () {
 Creep.prototype.upgradeing = function () {
 
     if (this.upgradeController(this.room.controller) === ERR_NOT_IN_RANGE) {
-        this.moveTo(this.room.controller, {visualizePathStyle: {stroke: '#fff666'}});
+        this.travelTo(this.room.controller, {visualizePathStyle: {stroke: '#fff666'}});
     }
     this.say('⚡');
 
@@ -91,7 +92,7 @@ Creep.prototype.building = function () {
 
     if (target) {
         if (this.build(target) === ERR_NOT_IN_RANGE) {
-            this.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+            this.travelTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
         }
         this.say('🚧');
 
@@ -116,7 +117,7 @@ Creep.prototype.repairing = function () {
 
     if (target) {
         if (this.repair(target) === ERR_NOT_IN_RANGE) {
-            this.moveTo(target, {visualizePathStyle: {stroke: '#efefef'}});
+            this.travelTo(target, {visualizePathStyle: {stroke: '#efefef'}});
         }
         this.say('🛠');
 

@@ -31,7 +31,7 @@ Spawn.prototype.spawn = function (partCounts, name, memory) {
 }
 
 Spawn.prototype.spawnUnspecific= function(room){
-    if (room.energyCapacityAvailable <= 550 || room.memory.aliveCreeps.length === 0) {
+    if (room.energyCapacityAvailable < 550) {
 
         if (room.energyAvailable > 299) {
             if (this.spawnSpecific('basic', {room: room.name, role: 'waiting'})) {

@@ -31,12 +31,12 @@ Room.prototype.manageCreeps = function () {
             if (this.memory.jobs.feeding >= 1) {
                 creep.memory.role = 'feeding'
                 this.memory.jobs.feeding--
-            } else if (this.memory.jobs.building - this.memory.stats.builders > 0) {
-                creep.memory.role = 'building'
-                this.memory.stats.builders += creep.workParts()
             } else if (this.memory.jobs.repairing - this.memory.stats.repairers > 0) {
                 creep.memory.role = 'repairing'
                 this.memory.stats.repairers += creep.workParts()
+            } else if (this.memory.jobs.building - this.memory.stats.builders > 0) {
+                creep.memory.role = 'building'
+                this.memory.stats.builders += creep.workParts()
             } else {
                 creep.memory.role = 'upgradeing'
                 this.memory.stats.upgraders += creep.workParts()
@@ -77,16 +77,16 @@ Room.prototype.updateJobBuilders = function () {
     if (neededWork > 1)
         this.memory.jobs.building = 4
     if (neededWork > 1000)
-        this.memory.jobs.building = 6
-    if (neededWork >= 2000)
         this.memory.jobs.building = 8
-    if (neededWork >= 5000)
-        this.memory.jobs.building = 10
-    if (neededWork >= 10000)
+    if (neededWork >= 2000)
         this.memory.jobs.building = 12
-    if (neededWork >= 20000)
-        this.memory.jobs.building = 14
-    if (neededWork >= 50000)
+    if (neededWork >= 5000)
         this.memory.jobs.building = 16
+    if (neededWork >= 10000)
+        this.memory.jobs.building = 18
+    if (neededWork >= 20000)
+        this.memory.jobs.building = 20
+    if (neededWork >= 50000)
+        this.memory.jobs.building = 22
 }
 
