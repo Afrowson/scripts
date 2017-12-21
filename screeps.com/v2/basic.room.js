@@ -11,6 +11,9 @@ Room.prototype.one = function() {
 }
 
 Room.prototype.manageCreeps = function() {
+    if(!this.memory.level) {
+        return
+    }
     if(this.energyAvailable < this.energyCapacityAvailable) {
         this.memory.jobs.feeding = 5 - this.memory.stats.feeders
     }

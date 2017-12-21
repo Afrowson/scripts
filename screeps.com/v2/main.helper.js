@@ -13,11 +13,13 @@ let mainHelper = {
     updateStats: function() {
         
         for(let id in Memory.rooms) {
-            Memory.rooms[id].stats.feeders = 0
-            Memory.rooms[id].stats.upgraders = 0
-            Memory.rooms[id].stats.builders = 0
-            Memory.rooms[id].stats.repairers = 0
-            Memory.rooms[id].aliveCreeps = Object.keys(Game.creeps)
+            if(Memory.rooms[id].level) {
+                Memory.rooms[id].stats.feeders = 0
+                Memory.rooms[id].stats.upgraders = 0
+                Memory.rooms[id].stats.builders = 0
+                Memory.rooms[id].stats.repairers = 0
+                Memory.rooms[id].aliveCreeps = Object.keys(Game.creeps)
+            }
         }
         
         for(let name in Game.creeps) {
